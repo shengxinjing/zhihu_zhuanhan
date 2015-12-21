@@ -11,8 +11,11 @@ def getHtml(name):
 	r = requests.get(url)
 	res = '<html><meta charset="utf-8"><link rel="stylesheet" href="http://z1.zhimg.com/styles/5a8458ed.main.css"><body>'
 
-	res += '<div style="width:1000px" class="main receptacle post-view">'
-	for obj in r.json()[::-1]:
+	res += '<div style="width:700px" class="main receptacle post-view">'
+	data = r.json()
+	res += '<h1>共有'+str(len(data))+'篇</h1>'
+	for obj in data[::-1]:
+		res+='<img src="'+obj['titleImage']+'">'
 		res+='<div class="entry-content">'
 
 		res += '<h1 style="font-size:25px">'+obj['title']+'</h1><hr>'
@@ -24,9 +27,8 @@ def getHtml(name):
 	with open(name+'.html','w') as f:
 
 		f.write(res)
-a = raw_input('你好 ')
-
-zhuanlan_list = ['auxten','daily']
-for name in zhuanlan_list:
+# tmp = raw_input('请输入专栏名字: ')
+tmp='auxten,oh-hard'
+for name in tmp.split(','):
 	getHtml(name)
 
